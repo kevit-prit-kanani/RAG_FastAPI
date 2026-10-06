@@ -13,7 +13,7 @@ The objective was not to build a production platform. The objective was to imple
 ```text
                                   ┌───────────────────────────┐
                                   │       FastAPI API         │
-                                  │ /health /ingest /search  │
+                                  │ /health /ingest /search   │
                                   │        /chat              │
                                   └─────────────┬─────────────┘
                                                 │
@@ -21,43 +21,43 @@ The objective was not to build a production platform. The objective was to imple
                            │                                         │
                            ▼                                         ▼
                   ┌──────────────────┐                     ┌──────────────────┐
-                  │  Ingestion flow │                     │     Chat flow    │
+                  │  Ingestion flow  │                     │     Chat flow    │
                   └────────┬─────────┘                     └────────┬─────────┘
                            │                                        │
              ┌─────────────▼─────────────┐              ┌───────────▼───────────┐
-             │ PyMuPDF native extraction │              │ Conversation history │
+             │ PyMuPDF native extraction │              │ Conversation history  │
              └─────────────┬─────────────┘              └───────────┬───────────┘
                            │                                        │
-                  native text usable?                              │
+                  native text usable?                               │
                       │          │                                  ▼
                      yes        no                         ┌────────────────────┐
                       │          │                         │ OpenAI search-plan │
                       │          ▼                         │ tool/function call │
-                      │   ┌──────────────┐                └─────────┬──────────┘
-                      │   │ Tesseract OCR│                          │
-                      │   └──────┬───────┘                          ▼
-                      └──────────┴─────────────┐          ┌────────────────────┐
-                                               ▼          │ Hybrid retrieval   │
+                      │   ┌──────────────┐                 └─────────┬──────────┘
+                      │   │ Tesseract OCR│                           │
+                      │   └──────┬───────┘                           ▼
+                      └──────────┴─────────────┐           ┌────────────────────┐
+                                               ▼           │ Hybrid retrieval   │
                                       ┌────────────────┐   │ vector + keyword   │
                                       │ Structure-aware│   └─────────┬──────────┘
                                       │ chunking       │             │
                                       └───────┬────────┘             ▼
                                               │             ┌────────────────────┐
                                               ▼             │ RRF fused evidence │
-                                      ┌────────────────┐   └─────────┬──────────┘
-                                      │ OpenAI embedder│             │
-                                      └───────┬────────┘             ▼
+                                      ┌────────────────┐    └─────────┬──────────┘
+                                      │ OpenAI embedder│              │
+                                      └───────┬────────┘              ▼
                                               │             ┌────────────────────┐
                                               ▼             │ Final grounded LLM │
-                                      ┌────────────────┐   │ structured output  │
-                                      │ MongoDB Atlas  │   └─────────┬──────────┘
-                                      │ chunks         │             │
-                                      └────────────────┘             ▼
+                                      ┌────────────────┐    │ structured output  │
+                                      │ MongoDB Atlas  │    └─────────┬──────────┘
+                                      │ chunks         │              │
+                                      └────────────────┘              ▼
                                                            ┌────────────────────┐
                                                            │ Grounding validator│
                                                            └─────────┬──────────┘
                                                                      │
-                                                              valid / invalid
+                                                               valid / invalid
                                                                      │
                                                ┌─────────────────────┴───────────────────┐
                                                ▼                                         ▼
@@ -463,8 +463,8 @@ Conceptually:
       "numDimensions": 3072,
       "similarity": "cosine"
     },
-    {"type": "filter", "path": "document_id"},
-    {"type": "filter", "path": "page_number"}
+    { "type": "filter", "path": "document_id" },
+    { "type": "filter", "path": "page_number" }
   ]
 }
 ```
@@ -478,9 +478,9 @@ Conceptually:
   "mappings": {
     "dynamic": false,
     "fields": {
-      "content": {"type": "string"},
-      "section_text": {"type": "string"},
-      "source_filename": {"type": "string"}
+      "content": { "type": "string" },
+      "section_text": { "type": "string" },
+      "source_filename": { "type": "string" }
     }
   }
 }
@@ -721,7 +721,7 @@ Response shape:
 If `/search` returns:
 
 ```json
-{"results": []}
+{ "results": [] }
 ```
 
 then the problem is normally upstream of answer generation:
@@ -1095,7 +1095,7 @@ curl http://127.0.0.1:8000/health
 Expected:
 
 ```json
-{"status":"ok"}
+{ "status": "ok" }
 ```
 
 This only verifies the API process, not MongoDB/OpenAI readiness.
