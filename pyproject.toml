@@ -1,0 +1,26 @@
+[project]
+name = "rag-fastapi-mongodb"
+version = "0.4.2"
+description = "Small pure-Python RAG prototype with FastAPI, OCR, OpenAI embeddings, and MongoDB"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.115",
+    "openai>=1.0",
+    "pydantic>=2.0",
+    "pydantic-settings>=2.0",
+    "pymongo>=4.10",
+    "pymupdf>=1.24",
+    "pillow>=10.0",
+    "pytesseract>=0.3.13",
+    "tiktoken>=0.7",
+    "python-multipart>=0.0.9",
+    "uvicorn[standard]>=0.30",
+]
+[dependency-groups]
+dev = ["pytest>=8.0", "pytest-asyncio>=1.4.0", "ruff>=0.8"]
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["app"]
